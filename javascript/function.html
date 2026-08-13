@@ -9,9 +9,18 @@
     function abes(a,b){
         document.write("hello");
         document.write(a+b);
+        return a*b;
     }
-    abes(23,32);
-    abes(35,55);
-    abes(10,11);
+    document.write(abes(23,32));
+    document.write(abes(35,55));
+    document.write(abes(10,11));
+
+    const abes=()=>"hello";
+    document.write(abes)
+
+    const hello(a,b)=>{
+        return a+b;
+    }
+    document.write(hello);
 </body>
 </html>
