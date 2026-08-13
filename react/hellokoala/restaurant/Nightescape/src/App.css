@@ -1,0 +1,10 @@
+header{
+    background-color:bisque;
+}
+.logo{
+    background-color: bisque;
+}
+header{
+    display: flex;
+    flex-direction: row;
+}
