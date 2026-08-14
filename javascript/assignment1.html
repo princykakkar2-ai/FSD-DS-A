@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Checker</title>
+    <style>
+        img {
+            max-width: 150px;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <form onsubmit="event.preventDefault(); checkPrice();">
+        <fieldset>
+            <label for="food-item">Enter Your Item:</label>
+            <input type="text" id="food-item">
+            <button type="button" onclick="checkPrice()">Submit</button>
+            <br><br>
+            <div>
+                <img id="image" src="" alt="Item Image" style="display:none;" />
+                <p id="pr"></p>
+            </div>
+        </fieldset>
+    </form>
+
+    <script>
+        const store = {
+            'tea': 450,
+            'coffee': 600,
+            'sugar': 560,
+            'pulse': 200
+        };
+
+        const images = {
+            'coffee': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9BWsHzKWXY3orjOriG-fEK5zNHO5nvvAX-j72BuCXGg&s=10',
+            'tea': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBg-RbJOKya7I9fzpOME9HSiPEG5G7IMbfWr7AD9zcdg&s=10',
+            'sugar': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6E8aAv_IlZH69inCBdGPx8a_cBp80MlBezGBaMSsl2w&s=10',
+            'pulse': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ6Gr7kvXBqKTongo1axEdNhwUsvRQ3LZQ0g-HoozvdQ&s=10'
+        };
+
+        function checkPrice() {
+            const itemInput = document.getElementById('food-item').value.toLowerCase().trim();
+            const priceInput = document.getElementById('pr');
+            const imgElement = document.getElementById('image');
+
+            if (store.hasOwnProperty(itemInput)) {
+
+                priceInput.innerHTML = "The cost of " + itemInput + " is " + store[itemInput];
+                imgElement.src = images[itemInput];
+                imgElement.style.display = "block";
+            } else {
+                priceInput.innerHTML = "Item not found";
+                imgElement.src = "";
+                imgElement.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
