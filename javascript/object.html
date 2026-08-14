@@ -17,6 +17,10 @@
         document.writeln("name:"+student.name+"<br>");
         document.write("class:"+student.class+"<br>");
         document.writeln("fee:"+student.fee+"<br>");
+        document.writeln(JSON.stringify(student));
+        for(let x in student){
+            document.write(student[x]+"<br>")
+        }
     </script>
 </body>
 </html>
