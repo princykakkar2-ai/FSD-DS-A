@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student JSON Storage</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .box { background: #f4f4f4; padding: 15px; border-radius: 5px; margin-top: 15px; }
+        pre { background: #272822; color: #f8f8f2; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+    <h2>Add Student Data</h2>
+    <!-- 1. Input fields for Name and Course -->
+    <input type="text" id="stuName" placeholder="Enter Student Name">
+    <input type="text" id="stuCourse" placeholder="Enter Course Name">
+    <button onclick="saveAndShow()">Submit Data</button>
+
+    <div class="box">
+        <h3>1. Visual Display (Using .map)</h3>
+        <div id="visualDisplay">No data yet. Submit up to 5 students!</div>
+    </div>
+
+    <div class="box">
+        <h3>2. Behind the Scenes (Stored JSON String)</h3>
+        <!-- <pre> tags keep the exact spacing and layout of our JSON string -->
+        <pre id="jsonDisplay">// JSON string data will show up here</pre>
+    </div>
+
+    <script>
+        // Start with an empty array to collect student data
+        let studentList = [];
+
+        function saveAndShow() {
+            // Get values from the input fields
+            const nameValue = document.getElementById("stuName").value.trim();
+            const courseValue = document.getElementById("stuCourse").value.trim();
+
+            // Validation: Make sure inputs aren't empty
+            if (nameValue === "" || courseValue === "") {
+                alert("Please fill out both fields!");
+                return;
+            }
+
+            // Validation: Cap the list at 5 students maximum
+            if (studentList.length >= 5) {
+                alert("You have already reached the limit of 5 students!");
+                return;
+            }
+
+            // Create a new student object
+            const newStudent = {
+                name: nameValue,
+                course: courseValue
+            };
+
+            // Use SPREAD operator to add the new student to our array safely
+            studentList = [...studentList, newStudent];
+
+            // --- THE JSON PART ---
+            // Convert our JavaScript array into a structured JSON string
+            const jsonString = JSON.stringify(studentList, null, 2);
+            
+            // Store/Print the raw JSON string text on the screen
+            document.getElementById("jsonDisplay").textContent = jsonString;
+
+            // --- THE VISUAL DISPLAY PART ---
+            // Use MAP to convert array data into clean HTML paragraphs
+            const htmlLayout = studentList.map((student, index) => 
+                `<p><strong>${index + 1}. Name:</strong> ${student.name} | <strong>Course:</strong> ${student.course}</p>`
+            ).join("");
+
+            // Print the visual text to our webpage
+            document.getElementById("visualDisplay").innerHTML = htmlLayout;
+
+            // Clear input boxes so user can type the next student smoothly
+            document.getElementById("stuName").value = "";
+            document.getElementById("stuCourse").value = "";
+        }
+    </script>
+</body>
+</html>
