@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking System</title>
+    <style>
+        p { color: aliceblue; margin-left: 15px; }
+        h3 { color: aliceblue; margin-left: 25px; }
+
+        /* --- CUSTOM POP-UP (MODAL) STYLING --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            background-color: white;
+            border: 3px solid #1e4d50;
+            padding: 20px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            z-index: 1000;
+        }
+        .modal-content h2 { margin-top: 0; color: cadetblue; }
+        .modal-content p { color: #333; margin-left: 0; }
+        .close-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            float: right;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div style="border: 2px solid aliceblue; width: 400px; height: 600px; background-color: cadetblue; position: relative;">
+        <div style="display: flex; flex-direction: row; gap: 20px;">
+            <img src="https://gstatic.com" alt="" style="height: 50px; width: 50px; border-radius: 50%; background-color: cadetblue; margin-top: 20px; margin-left: 20px;"/>
+            <h1 style="color: aliceblue;">Bus Booking System</h1>
+        </div>
+        <hr style="color: aliceblue">
+        <h3>User Information</h3>
+        <p>User Name: <input type="text" id="name"/></p>
+        <p>User Age: <input type="text"/></p>
+        <p>Aadhar No: <input type="text"/></p>
+        <p>Select Your City: 
+            <select name="id" id="city">
+                <option>Goa</option>
+                <option>Delhi</option>
+                <option>Ghaziabad</option>
+                <option>Mumbai</option>
+                <option>Punjab</option>
+            </select>
+        </p>
+        <p>Select your travelling date: <input type="date"/></p>
+
+        <h3>Bus Information</h3>
+        <p>Select your bus type:</p>
+        <p>All <input type="radio" name="ad" value="all" checked/></p>
+        <p>Ac-Rs2000 <input type="radio" name="ad" value="2000"/></p>
+        <p>No-AC-Rs1500 <input type="radio" name="ad" value="1500"/></p>
+        
+        <p>Select your seat: 
+            <select id="seat">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </p>
+
+        <button style="color: black; margin-left: 20px;" onclick="Final()">Submit</button>
+    </div>
+
+    <!-- --- THE CUSTOM HTML POP-UP CONTAINER --- -->
+    <div id="myModal" class="modal">
+        <button class="close-btn" onclick="closeModal()">X</button>
+        <div id="modalBody" class="modal-content">
+            <!-- Dynamic HTML will get injected right here -->
+        </div>
+    </div>
+
+    <script>
+        function Final() {
+            const name = document.getElementById('name').value;
+            const city_name = document.getElementById('city').value;
+            const no_seat = parseInt(document.getElementById('seat').value) || 0;
+            const bus_type_element = document.querySelector('input[name="ad"]:checked');
+            
+            let pricePerSeat = 0;
+            if (bus_type_element) {
+                pricePerSeat = bus_type_element.value === "all" ? 1500 : parseInt(bus_type_element.value);
+            }
+            const cost = pricePerSeat * no_seat;
+
+            // Target the custom modal element container
+            const modal = document.getElementById('myModal');
+            const modalBody = document.getElementById('modalBody');
+
+            // INJECT FRESH HTML DIRECTLY INTO THE TARGET DOM ELEMENT
+            modalBody.innerHTML = `
+                <h2>🎉 Ticket Confirmed!</h2>
+                <p>Welcome back, <strong>${name}</strong></p>
+                <p>📍 Destination: <span style="color: red; font-weight: bold;">${city_name}</span></p>
+                <p>🎫 Total Seats: <u>${no_seat}</u></p>
+                <hr>
+                <h3>Total Cost: Rs. ${cost}</h3>
+            `;
+
+            // Reveal the structural modal layout element onto the screen
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+    </script>
+</body>
+</html>
